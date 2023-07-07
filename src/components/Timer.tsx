@@ -1,15 +1,11 @@
-import useTimer from "./useTimer";
-
+import Control from "./Control";
+import useTimer from "../customHooks/useTimer";
 
 export default function Timer() {
-
-  const {seconds, minutes, hours, start, reset, isRunning} = useTimer();  
-
-  return <>
-    <div className="digits">
-        Time: {hours}:{minutes}:{seconds}
+  return (
+    <div className="timer__container">
+      <h2>Timer</h2>
+      <Control {...useTimer(10)} />
     </div>
-    <button className="control-btn" onClick={start}>{isRunning ? 'Pause': 'Play'}</button>
-    <button className="control-btn" onClick={reset}>Reset</button>
-  </>
+  );
 }

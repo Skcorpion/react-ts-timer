@@ -1,0 +1,14 @@
+.control-btn {
+  margin: 0px 10px 0px 0px;
+  padding: 6px 14px;
+  color: rgb(64, 69, 73);
+  border-radius: 3px;
+  border: 1px solid rgb(64, 69, 73);
+  cursor: pointer;
+  transition: .3s;
+}
+
+.control-btn:hover {
+  color: aliceblue;
+  background-color: steelblue;
+}
