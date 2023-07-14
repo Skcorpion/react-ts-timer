@@ -5,7 +5,7 @@ export default function Timer() {
   return (
     <div className="timer__container">
       <h2>Timer</h2>
-      <Control {...useTimer(10)} />
+      <Control {...useTimer(10)} isControled={true}/>
     </div>
   );
 }

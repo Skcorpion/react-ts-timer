@@ -28,6 +28,10 @@ export default function useStopwatch() {
     setIsRunning(false);
     setTime(0);
   }
+
+  function handleChange() {
+    // do nothing
+  }
   
-  return { ...Time.getTimeFromSeconds(time), start, reset, isRunning };
+  return { ...Time.getTimeFromSeconds(time), start, reset, isRunning, handleChange };
 }
