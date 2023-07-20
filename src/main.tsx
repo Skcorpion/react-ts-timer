@@ -17,7 +17,9 @@ const router = createBrowserRouter([
       { path: "timer", element: <Timer /> },
     ],
   },
-]);
+], {
+  basename: '/react-ts-timer'
+});
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
