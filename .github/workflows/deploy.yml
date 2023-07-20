@@ -1,6 +1,4 @@
-2
-
- name: pnpm Example Workflow
+name: pnpm Example Workflow
 on:
   push: 
   branches: [ master]
