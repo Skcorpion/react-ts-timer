@@ -9,6 +9,9 @@ jobs:
   build:
     name: Build
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [18]
 
     steps:
       - name: Checkout repo
@@ -18,8 +21,11 @@ jobs:
         uses: pnpm/action-setup@v2
         with:
           version: 8
-      - name: Setup Node
+      - name: Setup Node @3
         uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'pnpm'
 
       - name: Install dependencies
         run: pnpm install
