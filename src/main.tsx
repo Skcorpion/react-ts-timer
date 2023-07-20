@@ -1,10 +1,26 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import App from './App.tsx'
-import './index.css'
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import Root from "./roots/Root.tsx";
+import ErrorPage from "./error-page";
+import "./index.css";
+import Stopwatch from "./roots/Stopwatch.tsx";
+import Timer from "./roots/Timer.tsx";
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <Root />,
+    errorElement: <ErrorPage />,
+    children: [
+      { path: "stopwatch", element: <Stopwatch /> },
+      { path: "timer", element: <Timer /> },
+    ],
+  },
+]);
+
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-)
+    <RouterProvider router={router} />
+  </React.StrictMode>
+);
