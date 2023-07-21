@@ -1,10 +1,11 @@
 import Control from "../components/Control";
-import useStopwatch from "../customHooks/useStopwatch";
+import { useTimerContext } from "./Root";
 
 export default function Stopwatch() {
+  const { stopWatch } = useTimerContext();
   return (
     <div className="stopwatch__container">
-      <Control {...useStopwatch()} isControled={false} />
+      <Control {...stopWatch} isControled={false} />
     </div>
   );
 }

@@ -1,10 +1,11 @@
 import Control from "../components/Control";
-import useTimer from "../customHooks/useTimer";
+import { useTimerContext } from "./Root";
 
 export default function Timer() {
+  const { timer } = useTimerContext();
   return (
     <div className="timer__container">
-      <Control {...useTimer(10)} isControled={true}/>
+      <Control {...timer} isControled={true} />
     </div>
   );
 }
