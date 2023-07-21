@@ -9,7 +9,7 @@ type ContextType = {
 
 function Root() {
   const timer = { ...useTimer(11) };
-  const stopWatch = { ...useStopwatch() };  
+  const stopWatch = { ...useStopwatch() };
 
   return (
     <>
@@ -17,10 +17,20 @@ function Root() {
       <nav>
         <ul>
           <li>
-            <NavLink to="stopwatch">Stopwatch</NavLink>
+            <NavLink to="stopwatch">
+              StopWatch
+              <span>
+                {stopWatch.hours}:{stopWatch.minutes}:{stopWatch.seconds}
+              </span>
+            </NavLink>
           </li>
           <li>
-            <NavLink to="timer">Timer</NavLink>
+            <NavLink to="timer">
+              Timer
+              <span>
+                {timer.hours}:{timer.minutes}:{timer.seconds}
+              </span>
+            </NavLink>
           </li>
         </ul>
       </nav>

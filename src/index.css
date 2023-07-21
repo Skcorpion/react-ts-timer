@@ -29,6 +29,7 @@ a {
   color: #fff;
   padding: 7px 15px;
   display: block;
+  position: relative;
   margin-bottom: 5px;
 }
 
@@ -38,6 +39,19 @@ a.active {
 
 a:visited {
   color: #fff;
+}
+
+a > span {
+  position: absolute;
+  top: 0;
+  right: 0;
+  transform: translateX(100%);
+  color: #565656;
+  padding: 7px 15px;
+}
+
+a.active > span {
+  color: #4682b4;
 }
 
 
