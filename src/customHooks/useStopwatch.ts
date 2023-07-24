@@ -36,6 +36,10 @@ export default function useStopwatch() {
   function handleClick() {
     // do nothing
   }
+
+  function handleUp() {
+    // do nothing
+  }
   
-  return { ...Time.getTimeFromSeconds(time), start, reset, isRunning, handleChange, handleClick };
+  return { ...Time.getTimeFromSeconds(time), start, reset, isRunning, handleChange, handleClick, handleUp };
 }

@@ -12,6 +12,7 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
   reset,
   handleChange,
   handleClick,
+  handleUp,
   isControled,
 }) => (
   <>
@@ -22,8 +23,9 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
             disabled: isRunning,
             inactive: !isControled,
           })}
-          onClick={() => handleClick(1, "hours")}
-          disabled={isRunning || !isControled}
+          onTouchStart={() => handleClick(1, "hours")}
+          onTouchEnd={handleUp}
+          onTouchCancel={handleUp}
         />
         <input
           className="digits"
@@ -38,8 +40,9 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
             disabled: isRunning,
             inactive: !isControled,
           })}
-          onClick={() => handleClick(-1, "hours")}
-          disabled={isRunning || !isControled}
+          onTouchStart={() => handleClick(-1, "hours")}
+          onTouchEnd={handleUp}
+          onTouchCancel={handleUp}
         />
       </div>
       <span className="colon">:</span>
@@ -49,8 +52,9 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
             disabled: isRunning,
             inactive: !isControled,
           })}
-          onClick={() => handleClick(1, "minutes")}
-          disabled={isRunning || !isControled}
+          onTouchStart={() => handleClick(1, "minutes")}
+          onTouchEnd={handleUp}
+          onTouchCancel={handleUp}
         />
         <input
           className="digits"
@@ -65,8 +69,9 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
             disabled: isRunning,
             inactive: !isControled,
           })}
-          onClick={() => handleClick(-1, "minutes")}
-          disabled={isRunning || !isControled}
+          onTouchStart={() => handleClick(-1, "minutes")}
+          onTouchEnd={handleUp}
+          onTouchCancel={handleUp}
         />
       </div>
       <span className="colon">:</span>
@@ -76,8 +81,9 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
             disabled: isRunning,
             inactive: !isControled,
           })}
-          onClick={() => handleClick(1, "seconds")}
-          disabled={isRunning || !isControled}
+          onTouchStart={() => handleClick(1, "seconds")}
+          onTouchEnd={handleUp}
+          onTouchCancel={handleUp}
         />
         <input
           className="digits"
@@ -92,8 +98,9 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
             disabled: isRunning,
             inactive: !isControled,
           })}
-          onClick={() => handleClick(-1, "seconds")}
-          disabled={isRunning || !isControled}
+          onTouchStart={() => handleClick(-1, "seconds")}
+          onTouchEnd={handleUp}
+          onTouchCancel={handleUp}
         />
       </div>
     </div>

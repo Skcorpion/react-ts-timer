@@ -4,6 +4,8 @@ import Time from "../utils/Time";
 export default function useTimer(startSeconds = 600) {
   const [time, setTime] = useState(startSeconds);
   const [isRunning, setIsRunning] = useState(false);
+  const [name, setName] = useState<null | string>(null);
+  const [incOrDec, setIncOrDec] = useState<1 | -1>(1);
 
   useEffect(() => {
     let timerInterval = 0;
@@ -21,6 +23,20 @@ export default function useTimer(startSeconds = 600) {
       clearInterval(timerInterval);
     };
   }, [isRunning, time]);
+
+  useEffect(() => {
+    let timeInterval = 0;
+    if (name !== null) {
+      changeTime(name, incOrDec);
+      timeInterval = setInterval(() => {
+        changeTime(name, incOrDec);
+      }, 150);
+    }
+
+    return () => {
+      clearInterval(timeInterval);
+    };
+  }, [name, incOrDec]);
 
   function start() {
     setIsRunning((prev) => !prev);
@@ -76,7 +92,14 @@ export default function useTimer(startSeconds = 600) {
   }
 
   function handleClick(incOrDec: 1 | -1, name: string) {
-    changeTime(name, incOrDec);
+    if (!isRunning) {
+      setIncOrDec(incOrDec);
+      setName(name);
+    }
+  }
+
+  function handleUp() {
+    setName(null);
   }
 
   return {
@@ -85,6 +108,7 @@ export default function useTimer(startSeconds = 600) {
     reset,
     handleChange,
     handleClick,
+    handleUp,
     isRunning,
   };
 }
