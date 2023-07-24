@@ -4,7 +4,7 @@ import Time from "../utils/Time";
 export default function useStopwatch() {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
-  const [activeFieldName, setActiveFieldName] = useState<null | string>(null); //do nothing
+  const activeFieldName = null; //do nothing
 
   useEffect(() => {
     let timerInterval = 0;
