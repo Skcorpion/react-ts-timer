@@ -4,7 +4,7 @@ import Time from "../utils/Time";
 export default function useTimer(startSeconds = 600) {
   const [time, setTime] = useState(startSeconds);
   const [isRunning, setIsRunning] = useState(false);
-  const [name, setName] = useState<null | string>(null);
+  const [activeFieldName, setActiveFieldName] = useState<null | string>(null);
   const [incOrDec, setIncOrDec] = useState<1 | -1>(1);
 
   useEffect(() => {
@@ -26,17 +26,17 @@ export default function useTimer(startSeconds = 600) {
 
   useEffect(() => {
     let timeInterval = 0;
-    if (name !== null) {
-      changeTime(name, incOrDec);
+    if (activeFieldName !== null) {
+      changeTime(activeFieldName, incOrDec);
       timeInterval = setInterval(() => {
-        changeTime(name, incOrDec);
+        changeTime(activeFieldName, incOrDec);
       }, 150);
     }
 
     return () => {
       clearInterval(timeInterval);
     };
-  }, [name, incOrDec]);
+  }, [activeFieldName, incOrDec]);
 
   function start() {
     setIsRunning((prev) => !prev);
@@ -94,12 +94,12 @@ export default function useTimer(startSeconds = 600) {
   function handleClick(incOrDec: 1 | -1, name: string) {
     if (!isRunning) {
       setIncOrDec(incOrDec);
-      setName(name);
+      setActiveFieldName(name);
     }
   }
 
   function handleUp() {
-    setName(null);
+    setActiveFieldName(null);
   }
 
   return {
@@ -110,5 +110,6 @@ export default function useTimer(startSeconds = 600) {
     handleClick,
     handleUp,
     isRunning,
+    activeFieldName
   };
 }

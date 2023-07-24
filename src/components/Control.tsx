@@ -14,6 +14,7 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
   handleClick,
   handleUp,
   isControled,
+  activeFieldName,
 }) => (
   <>
     <div className="time">
@@ -33,7 +34,7 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
           name="hours"
           value={hours}
           onChange={(e) => handleChange(e, hours, "hours")}
-          disabled={isRunning || !isControled}
+          disabled={isRunning || !isControled || activeFieldName !== null}
         />
         <button
           className={classNames("digits__btn", "down", {
@@ -62,7 +63,7 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
           name="minutes"
           value={minutes}
           onChange={(e) => handleChange(e, minutes, "minutes")}
-          disabled={isRunning || !isControled}
+          disabled={isRunning || !isControled || activeFieldName !== null}
         />
         <button
           className={classNames("digits__btn", "down", {
@@ -91,7 +92,7 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
           name="seconds"
           value={seconds}
           onChange={(e) => handleChange(e, seconds, "seconds")}
-          disabled={isRunning || !isControled}
+          disabled={isRunning || !isControled || activeFieldName !== null}
         />
         <button
           className={classNames("digits__btn", "down", {
