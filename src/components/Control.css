@@ -48,11 +48,11 @@
   position: relative;
   transform: translateY(0) scale(1);
   transition: all 0.5s ease;
-  width: 500px;
+  max-width: 500px;
 }
 
 .digits {
-  font-size: 600%;
+  font-size: 6rem;
   font-variant-numeric: tabular-nums;
   color: #dedede;
   cursor: default;
@@ -69,4 +69,20 @@ input[type="number"] {
 
 .digits.active {
   color: #ffa500;
+}
+
+@media (max-width: 550px) {
+  .time {
+    padding: 0;
+  }
+  .digits {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 400px) {
+
+  .digits {
+    font-size: 4rem;
+  }
 }
