@@ -1,4 +1,4 @@
-import { useEffect, useState} from "react";
+import { useEffect, useState } from "react";
 import Time from "../utils/Time";
 
 export default function useTimer(startSeconds = 600) {
@@ -31,44 +31,52 @@ export default function useTimer(startSeconds = 600) {
     setTime(startSeconds);
   }
 
+  function changeTime(name: string, incOrDec: 1 | -1) {
+    switch (name) {
+      case "hours":
+        setTime((prev) => {
+          const nextValue = prev + 3600 * incOrDec;
+          if (nextValue >= 0) {
+            return nextValue;
+          } else return prev;
+        });
+        break;
+      case "minutes":
+        setTime((prev) => {
+          const nextValue = prev + 60 * incOrDec;
+          if (nextValue >= 0) {
+            return nextValue;
+          } else return prev;
+        });
+        break;
+      case "seconds":
+        setTime((prev) => {
+          const nextValue = prev + incOrDec;
+          if (nextValue >= 0) {
+            return nextValue;
+          } else return prev;
+        });
+        break;
+    }
+  }
+
   function handleChange(
     e: React.ChangeEvent<HTMLInputElement>,
-    prevValue: string
+    prevValue: string,
+    name: string
   ) {
     if (!("inputType" in e.nativeEvent)) {
       // filter keyboard numbers (only arrows allowed)
-      const { name, value } = e.target;
+      const { value } = e.target;
       const intValue = parseInt(value);
       const intPrevValue = parseInt(prevValue);
       const incOrDec = intValue > intPrevValue ? 1 : -1;
-
-      switch (name) {
-        case "hours":
-          setTime((prev) => {
-            const nextValue = prev + 3600 * incOrDec;
-            if (nextValue >= 0) {
-              return nextValue;
-            } else return prev;
-          });
-          break;
-        case "minutes":
-          setTime((prev) => {
-            const nextValue = prev + 60 * incOrDec;
-            if (nextValue >= 0) {
-              return nextValue;
-            } else return prev;
-          });
-          break;
-        case "seconds":
-          setTime((prev) => {
-            const nextValue = prev + incOrDec;
-            if (nextValue >= 0) {
-              return nextValue;
-            } else return prev;
-          });
-          break;
-      }
+      changeTime(name, incOrDec);
     }
+  }
+
+  function handleClick(incOrDec: 1 | -1, name: string) {
+    changeTime(name, incOrDec);
   }
 
   return {
@@ -76,6 +84,7 @@ export default function useTimer(startSeconds = 600) {
     start,
     reset,
     handleChange,
+    handleClick,
     isRunning,
   };
 }

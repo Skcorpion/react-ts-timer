@@ -54,4 +54,9 @@ a.active > span {
   color: #4682b4;
 }
 
+button {
+  border: none;
+  background-color: transparent;
+  cursor: pointer;
+}
 
