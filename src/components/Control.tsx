@@ -1,7 +1,8 @@
 import { FC } from "react";
 import "./Control.css";
 import useTimer from "../customHooks/useTimer";
-import classNames from "classnames";
+import ControlButtons from "./ControlButtons/ControlButtons";
+import Digits from "./Digits/Digits";
 
 const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
   hours,
@@ -18,104 +19,43 @@ const Control: FC<ReturnType<typeof useTimer> & { isControled: boolean }> = ({
 }) => (
   <>
     <div className="time">
-      <div className="digits__wrapper">
-        <button
-          className={classNames("digits__btn", "up", {
-            disabled: isRunning,
-            inactive: !isControled,
-          })}
-          onTouchStart={() => handleClick(1, "hours")}
-          onTouchEnd={handleUp}
-          onTouchCancel={handleUp}
-        />
-        <input
-          className="digits"
-          type="number"
-          name="hours"
-          value={hours}
-          onChange={(e) => handleChange(e, hours, "hours")}
-          disabled={isRunning || !isControled || activeFieldName !== null}
-        />
-        <button
-          className={classNames("digits__btn", "down", {
-            disabled: isRunning,
-            inactive: !isControled,
-          })}
-          onTouchStart={() => handleClick(-1, "hours")}
-          onTouchEnd={handleUp}
-          onTouchCancel={handleUp}
-        />
-      </div>
+      <Digits
+        {...{
+          isRunning,
+          isControled,
+          handleClick,
+          handleUp,
+          handleChange,
+          activeFieldName,
+          time: { type: "hours", digits: hours },
+        }}
+      />
       <span className="colon">:</span>
-      <div className="digits__wrapper">
-        <button
-          className={classNames("digits__btn", "up", {
-            disabled: isRunning,
-            inactive: !isControled,
-          })}
-          onTouchStart={() => handleClick(1, "minutes")}
-          onTouchEnd={handleUp}
-          onTouchCancel={handleUp}
-        />
-        <input
-          className="digits"
-          type="number"
-          name="minutes"
-          value={minutes}
-          onChange={(e) => handleChange(e, minutes, "minutes")}
-          disabled={isRunning || !isControled || activeFieldName !== null}
-        />
-        <button
-          className={classNames("digits__btn", "down", {
-            disabled: isRunning,
-            inactive: !isControled,
-          })}
-          onTouchStart={() => handleClick(-1, "minutes")}
-          onTouchEnd={handleUp}
-          onTouchCancel={handleUp}
-        />
-      </div>
+      <Digits
+        {...{
+          isRunning,
+          isControled,
+          handleClick,
+          handleUp,
+          handleChange,
+          activeFieldName,
+          time: { type: "minutes", digits: minutes },
+        }}
+      />
       <span className="colon">:</span>
-      <div className="digits__wrapper">
-        <button
-          className={classNames("digits__btn", "up", {
-            disabled: isRunning,
-            inactive: !isControled,
-          })}
-          onTouchStart={() => handleClick(1, "seconds")}
-          onTouchEnd={handleUp}
-          onTouchCancel={handleUp}
-        />
-        <input
-          className="digits"
-          type="number"
-          name="seconds"
-          value={seconds}
-          onChange={(e) => handleChange(e, seconds, "seconds")}
-          disabled={isRunning || !isControled || activeFieldName !== null}
-        />
-        <button
-          className={classNames("digits__btn", "down", {
-            disabled: isRunning,
-            inactive: !isControled,
-          })}
-          onTouchStart={() => handleClick(-1, "seconds")}
-          onTouchEnd={handleUp}
-          onTouchCancel={handleUp}
-        />
-      </div>
+      <Digits
+        {...{
+          isRunning,
+          isControled,
+          handleClick,
+          handleUp,
+          handleChange,
+          activeFieldName,
+          time: { type: "seconds", digits: seconds },
+        }}
+      />
     </div>
-    <div className="buttons">
-      <button
-        className={`control-btn start ${isRunning ? "running" : ""}`}
-        onClick={start}
-      >
-        {isRunning ? "Pause" : "Play"}
-      </button>
-      <button className="control-btn" onClick={reset}>
-        Reset
-      </button>
-    </div>
+    <ControlButtons {...{ isRunning, start, reset }} />
   </>
 );
 

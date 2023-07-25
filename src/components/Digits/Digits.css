@@ -1,0 +1,33 @@
+.digits__wrapper {
+  position: relative;
+  width: 100%;
+}
+
+.digits {
+  font-size: 6rem;
+  font-variant-numeric: tabular-nums;
+  color: #dedede;
+  cursor: default;
+  appearance: none;
+  border: none;
+  background-color: transparent;
+  width: 100%;
+  text-align: center;
+}
+
+.digits.active {
+  color: #ffa500;
+}
+
+@media (max-width: 550px) {
+  .digits {
+    font-size: 5rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .digits {
+    font-size: 4rem;
+  }
+}
+
