@@ -5,16 +5,16 @@ import StopwatchDigits from "../components/Digits/StopwatchDigits";
 
 export default function Stopwatch() {
   const { stopWatch } = useTimerContext();
-  const { hours, minutes, seconds, isRunning, start, reset } = stopWatch;
+  const { time, isRunning, start, reset } = stopWatch;
   return (
     <div className="stopwatch__container">
       <Control
-        hours={<StopwatchDigits {...{ timeType: "hours", digits: hours }} />}
+        hours={<StopwatchDigits {...{ timeType: "hours", digits: time.hours }} />}
         minutes={
-          <StopwatchDigits {...{ timeType: "minutes", digits: minutes }} />
+          <StopwatchDigits {...{ timeType: "minutes", digits: time.minutes }} />
         }
         seconds={
-          <StopwatchDigits {...{ timeType: "seconds", digits: seconds }} />
+          <StopwatchDigits {...{ timeType: "seconds", digits: time.seconds }} />
         }
       />
       <ControlButtons {...{ isRunning, start, reset }} />

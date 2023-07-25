@@ -1,21 +1,21 @@
 import "./Digits.css";
 import { FC } from "react";
-import useTimer from "../../customHooks/useTimer";
+import { UseTimerType } from "../../customHooks/useTimer";
 import classNames from "classnames";
 
-type TimerDigitsType = Pick<
-  ReturnType<typeof useTimer>,
-  "isRunning" | "handleClick" | "handleUp" | "handleChange" | "activeFieldName"
-> & { timeType: string; digits: string };
+type TimerDigitsType = Omit<UseTimerType, "start" | "reset" | "time"> & {
+  timeType: string;
+  digits: string;
+};
 
 const TimerDigits: FC<TimerDigitsType> = ({
+  digits,
+  timeType,
   isRunning,
+  activeFieldName,
+  handleChange,
   handleClick,
   handleUp,
-  handleChange,
-  activeFieldName,
-  timeType,
-  digits
 }) => (
   <div className="digits__wrapper">
     <button

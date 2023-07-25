@@ -1,10 +1,10 @@
 import { NavLink, Outlet, useOutletContext } from "react-router-dom";
-import useTimer from "../customHooks/useTimer";
-import useStopwatch from "../customHooks/useStopwatch";
+import useTimer, { UseTimerType } from "../customHooks/useTimer";
+import useStopwatch, { UseStopwatchType } from "../customHooks/useStopwatch";
 
 type ContextType = {
-  timer: ReturnType<typeof useTimer>;
-  stopWatch: ReturnType<typeof useStopwatch>;
+  timer: UseTimerType;
+  stopWatch: UseStopwatchType;
 };
 
 function Root() {
@@ -20,7 +20,8 @@ function Root() {
             <NavLink to="stopwatch">
               StopWatch
               <span>
-                {stopWatch.hours}:{stopWatch.minutes}:{stopWatch.seconds}
+                {stopWatch.time.hours}:{stopWatch.time.minutes}:
+                {stopWatch.time.seconds}
               </span>
             </NavLink>
           </li>
@@ -28,7 +29,7 @@ function Root() {
             <NavLink to="timer">
               Timer
               <span>
-                {timer.hours}:{timer.minutes}:{timer.seconds}
+                {timer.time.hours}:{timer.time.minutes}:{timer.time.seconds}
               </span>
             </NavLink>
           </li>

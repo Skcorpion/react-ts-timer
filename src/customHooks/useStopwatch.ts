@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Time from "../utils/Time";
 
+export type UseStopwatchType = ReturnType<typeof useStopwatch>;
+
 export default function useStopwatch() {
   const [time, setTime] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
@@ -30,9 +32,9 @@ export default function useStopwatch() {
   }
 
   return {
-    ...Time.getTimeFromSeconds(time),
+    time: Time.getTimeFromSeconds(time),
+    isRunning,
     start,
     reset,
-    isRunning
   };
 }

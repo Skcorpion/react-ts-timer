@@ -1,6 +1,8 @@
 import { useEffect, useState } from "react";
 import Time from "../utils/Time";
 
+export type UseTimerType = ReturnType<typeof useTimer>;
+
 export default function useTimer(startSeconds = 600) {
   const [time, setTime] = useState(startSeconds);
   const [isRunning, setIsRunning] = useState(false);
@@ -103,13 +105,13 @@ export default function useTimer(startSeconds = 600) {
   }
 
   return {
-    ...Time.getTimeFromSeconds(time),
+    time: Time.getTimeFromSeconds(time),
+    isRunning,
+    activeFieldName,
     start,
     reset,
     handleChange,
     handleClick,
     handleUp,
-    isRunning,
-    activeFieldName
   };
 }

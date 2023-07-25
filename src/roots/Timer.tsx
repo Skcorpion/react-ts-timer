@@ -6,23 +6,21 @@ import { useTimerContext } from "./Root";
 export default function Timer() {
   const { timer } = useTimerContext();
   const {
+    time,
     isRunning,
+    activeFieldName,
     start,
     reset,
-    hours,
-    minutes,
-    seconds,
+    handleChange,
     handleClick,
     handleUp,
-    handleChange,
-    activeFieldName,
   } = timer;
   const compactProps = {
     isRunning,
+    activeFieldName,
     handleClick,
     handleUp,
     handleChange,
-    activeFieldName,
   };
   return (
     <div className="timer__container">
@@ -32,7 +30,7 @@ export default function Timer() {
             {...{
               ...compactProps,
               timeType: "hours",
-              digits: hours,
+              digits: time.hours,
             }}
           />
         }
@@ -41,7 +39,7 @@ export default function Timer() {
             {...{
               ...compactProps,
               timeType: "minutes",
-              digits: minutes,
+              digits: time.minutes,
             }}
           />
         }
@@ -50,7 +48,7 @@ export default function Timer() {
             {...{
               ...compactProps,
               timeType: "seconds",
-              digits: seconds,
+              digits: time.seconds,
             }}
           />
         }
