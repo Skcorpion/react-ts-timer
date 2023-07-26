@@ -11,16 +11,14 @@ export default function Timer() {
     activeFieldName,
     start,
     reset,
-    handleChange,
-    handleClick,
-    handleUp,
+    inputHandlers,
+    inputButtonHandlers,
   } = timer;
   const compactProps = {
     isRunning,
     activeFieldName,
-    handleClick,
-    handleUp,
-    handleChange,
+    inputHandlers,
+    inputButtonHandlers,
   };
   return (
     <div className="timer__container">

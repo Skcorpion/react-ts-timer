@@ -78,7 +78,13 @@ export default function useTimer(startSeconds = 600) {
     }
   }
 
-  function handleChange(
+  function moveCaretToEnd(e: React.ChangeEvent<HTMLInputElement>) {
+    const { target } = e;
+    target.selectionStart = 2;
+    target.selectionEnd = 2;
+  }
+
+  function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement>,
     prevValue: string,
     name: string
@@ -93,15 +99,25 @@ export default function useTimer(startSeconds = 600) {
     }
   }
 
-  function handleClick(incOrDec: 1 | -1, name: string) {
+  function handleInputButtonTouchDown(incOrDec: 1 | -1, name: string) {
     if (!isRunning) {
       setIncOrDec(incOrDec);
       setActiveFieldName(name);
     }
   }
 
-  function handleUp() {
+  function handleInputButtonTouchUp() {
     setActiveFieldName(null);
+  }
+
+  function handleInputFocus() {}
+
+  function handleInputTouchDown() {}
+
+  function handleInputMouseDown() {}
+
+  function handleInputKeyDown() {
+    //if key <- -> then e.preventDefault()
   }
 
   return {
@@ -110,8 +126,12 @@ export default function useTimer(startSeconds = 600) {
     activeFieldName,
     start,
     reset,
-    handleChange,
-    handleClick,
-    handleUp,
+    inputHandlers: {
+      handleInputChange,
+    },
+    inputButtonHandlers: {
+      handleInputButtonTouchDown,
+      handleInputButtonTouchUp,
+    },
   };
 }
