@@ -7,6 +7,7 @@ export default function useTimer(startSeconds = 600) {
   const [time, setTime] = useState(startSeconds);
   const [isRunning, setIsRunning] = useState(false);
   const [activeFieldName, setActiveFieldName] = useState<null | string>(null);
+  const [activeInputButton, setActiveInputButton] = useState(false);
   const [incOrDec, setIncOrDec] = useState<1 | -1>(1);
 
   useEffect(() => {
@@ -32,7 +33,7 @@ export default function useTimer(startSeconds = 600) {
       changeTime(activeFieldName, incOrDec);
       timeInterval = setInterval(() => {
         changeTime(activeFieldName, incOrDec);
-      }, 150);
+      }, 100);
     }
 
     return () => {
@@ -78,10 +79,13 @@ export default function useTimer(startSeconds = 600) {
     }
   }
 
-  function moveCaretToEnd(e: React.ChangeEvent<HTMLInputElement>) {
-    const { target } = e;
-    target.selectionStart = 2;
-    target.selectionEnd = 2;
+  function moveCaretToEnd(
+    e:
+      | React.ChangeEvent<HTMLInputElement>
+      | React.MouseEvent<HTMLInputElement, MouseEvent>
+      | React.FocusEvent<HTMLInputElement, Element>
+  ) {
+    (e.target as HTMLInputElement).setSelectionRange(2, 2);
   }
 
   function handleInputChange(
@@ -89,6 +93,10 @@ export default function useTimer(startSeconds = 600) {
     prevValue: string,
     name: string
   ) {
+    // fix copy past hack!
+    console.log(e.target.value.slice(1));
+
+
     if (!("inputType" in e.nativeEvent)) {
       // filter keyboard numbers (only arrows allowed)
       const { value } = e.target;
@@ -99,39 +107,71 @@ export default function useTimer(startSeconds = 600) {
     }
   }
 
-  function handleInputButtonTouchDown(incOrDec: 1 | -1, name: string) {
+  function handleInputButtonDown(incOrDec: 1 | -1, name: string) {
     if (!isRunning) {
       setIncOrDec(incOrDec);
       setActiveFieldName(name);
+      setActiveInputButton(true);
     }
   }
 
-  function handleInputButtonTouchUp() {
+  function handleInputButtonUp() {
     setActiveFieldName(null);
+    setActiveInputButton(false);
   }
 
-  function handleInputFocus() {}
+  function handleInputFocus(e: React.FocusEvent<HTMLInputElement, Element>) {
+    moveCaretToEnd(e);
+  }
 
-  function handleInputTouchDown() {}
+  function handleInputClick(e: React.MouseEvent<HTMLInputElement, MouseEvent>) {
+    moveCaretToEnd(e);
+  }
 
-  function handleInputMouseDown() {}
+  function handleInputKeyDown(
+    e: React.KeyboardEvent<HTMLInputElement>,
+    name: string
+  ) {
+    if (e.key === "ArrowUp") {
+      e.preventDefault();
+      setIncOrDec(1);
+      setActiveFieldName(name);
+    } else if (e.key === "ArrowDown") {
+      e.preventDefault();
+      setIncOrDec(-1);
+      setActiveFieldName(name);
+    } else if (/\D/.test(e.key)) {
+      e.preventDefault();
+    }
+  }
 
-  function handleInputKeyDown() {
-    //if key <- -> then e.preventDefault()
+  function handleInputKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
+    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
+      setActiveFieldName(null);
+    }
+  }
+
+  function handleInputBlur() {
+    setActiveFieldName(null);
   }
 
   return {
     time: Time.getTimeFromSeconds(time),
     isRunning,
-    activeFieldName,
+    activeInputButton,
     start,
     reset,
     inputHandlers: {
       handleInputChange,
+      handleInputFocus,
+      handleInputKeyDown,
+      handleInputClick,
+      handleInputKeyUp,
+      handleInputBlur,
     },
     inputButtonHandlers: {
-      handleInputButtonTouchDown,
-      handleInputButtonTouchUp,
+      handleInputButtonDown,
+      handleInputButtonUp,
     },
   };
 }

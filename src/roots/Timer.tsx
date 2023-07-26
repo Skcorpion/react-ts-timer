@@ -8,7 +8,7 @@ export default function Timer() {
   const {
     time,
     isRunning,
-    activeFieldName,
+    activeInputButton,
     start,
     reset,
     inputHandlers,
@@ -16,7 +16,7 @@ export default function Timer() {
   } = timer;
   const compactProps = {
     isRunning,
-    activeFieldName,
+    activeInputButton,
     inputHandlers,
     inputButtonHandlers,
   };
