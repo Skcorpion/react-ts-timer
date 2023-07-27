@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import Time from "../utils/Time";
-import sound from '../assets/bell-ding.wav'
+import sound from "../assets/bell-ding.wav";
 
 export type UseTimerType = ReturnType<typeof useTimer>;
 
 export default function useTimer(startSeconds = 600) {
   const [fullTimeInSeconds, setFullTimeInSeconds] = useState(startSeconds);
+  const [resetTime, setResetTime] = useState(startSeconds);
   const [isRunning, setIsRunning] = useState(false);
+  const [isChanged, setIsChanged] = useState(false);
   const [activeFieldName, setActiveFieldName] = useState<null | string>(null);
   const [activeInputButton, setActiveInputButton] = useState(false);
   const [incOrDec, setIncOrDec] = useState<1 | -1>(1);
@@ -22,6 +24,7 @@ export default function useTimer(startSeconds = 600) {
           setIsRunning(false);
         }
       }, 1000);
+      setIsChanged(false);
     }
 
     return () => {
@@ -30,6 +33,10 @@ export default function useTimer(startSeconds = 600) {
   }, [isRunning, fullTimeInSeconds]);
 
   useEffect(() => {
+    if (isChanged) setResetTime(fullTimeInSeconds);
+  }, [isChanged, fullTimeInSeconds]);
+
+  useEffect(() => {    
     let timeInterval = 0;
     if (activeFieldName !== null) {
       changeTime(activeFieldName, incOrDec);
@@ -49,10 +56,10 @@ export default function useTimer(startSeconds = 600) {
 
   function reset() {
     setIsRunning(false);
-    setFullTimeInSeconds(startSeconds);
+    setFullTimeInSeconds(resetTime);
   }
 
-  function changeTime(name: string, incOrDec: 1 | -1) {
+  function changeTime(name: string, incOrDec: 1 | -1) { 
     switch (name) {
       case "hours":
         setFullTimeInSeconds((prev) => {
@@ -79,6 +86,7 @@ export default function useTimer(startSeconds = 600) {
         });
         break;
     }
+  setIsChanged(true);
   }
 
   // Play the sound effect when the timer ends
@@ -87,12 +95,11 @@ export default function useTimer(startSeconds = 600) {
     audio.play();
   };
 
-
   function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement>,
     prevValue: string,
     name: string
-  ) {    
+  ) {
     if (!("inputType" in e.nativeEvent)) {
       // filter keyboard numbers (only arrows allowed)
       const { value } = e.target;
@@ -117,7 +124,7 @@ export default function useTimer(startSeconds = 600) {
   }
 
   return {
-    time: {...Time.getTimeFromSeconds(fullTimeInSeconds), fullTimeInSeconds},
+    time: { ...Time.getTimeFromSeconds(fullTimeInSeconds), fullTimeInSeconds },
     isRunning,
     activeInputButton,
     start,
