@@ -4,7 +4,7 @@ import Time from "../utils/Time";
 export type UseStopwatchType = ReturnType<typeof useStopwatch>;
 
 export default function useStopwatch() {
-  const [time, setTime] = useState(0);
+  const [fullTimeInSeconds, setFullTimeInSeconds] = useState(0);
   const [isRunning, setIsRunning] = useState(false);
 
   useEffect(() => {
@@ -12,7 +12,7 @@ export default function useStopwatch() {
     if (isRunning) {
       timerInterval = setInterval(() => {
         if (isRunning) {
-          setTime((prev) => prev + 1);
+          setFullTimeInSeconds((prev) => prev + 1);
         }
       }, 1000);
     }
@@ -28,11 +28,11 @@ export default function useStopwatch() {
 
   function reset() {
     setIsRunning(false);
-    setTime(0);
+    setFullTimeInSeconds(0);
   }
 
   return {
-    time: Time.getTimeFromSeconds(time),
+    time: {...Time.getTimeFromSeconds(fullTimeInSeconds), fullTimeInSeconds}, 
     isRunning,
     start,
     reset,
