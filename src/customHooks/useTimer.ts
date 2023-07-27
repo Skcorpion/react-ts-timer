@@ -79,24 +79,12 @@ export default function useTimer(startSeconds = 600) {
     }
   }
 
-  function moveCaretToEnd(
-    e:
-      | React.ChangeEvent<HTMLInputElement>
-      | React.MouseEvent<HTMLInputElement, MouseEvent>
-      | React.FocusEvent<HTMLInputElement, Element>
-  ) {
-    (e.target as HTMLInputElement).setSelectionRange(2, 2);
-  }
 
   function handleInputChange(
     e: React.ChangeEvent<HTMLInputElement>,
     prevValue: string,
     name: string
-  ) {
-    // fix copy past hack!
-    console.log(e.target.value.slice(1));
-
-
+  ) {    
     if (!("inputType" in e.nativeEvent)) {
       // filter keyboard numbers (only arrows allowed)
       const { value } = e.target;
@@ -107,7 +95,7 @@ export default function useTimer(startSeconds = 600) {
     }
   }
 
-  function handleInputButtonDown(incOrDec: 1 | -1, name: string) {
+  function handleInputButtonTouchDown(incOrDec: 1 | -1, name: string) {
     if (!isRunning) {
       setIncOrDec(incOrDec);
       setActiveFieldName(name);
@@ -115,44 +103,9 @@ export default function useTimer(startSeconds = 600) {
     }
   }
 
-  function handleInputButtonUp() {
+  function handleInputButtonTouchUp() {
     setActiveFieldName(null);
     setActiveInputButton(false);
-  }
-
-  function handleInputFocus(e: React.FocusEvent<HTMLInputElement, Element>) {
-    moveCaretToEnd(e);
-  }
-
-  function handleInputClick(e: React.MouseEvent<HTMLInputElement, MouseEvent>) {
-    moveCaretToEnd(e);
-  }
-
-  function handleInputKeyDown(
-    e: React.KeyboardEvent<HTMLInputElement>,
-    name: string
-  ) {
-    if (e.key === "ArrowUp") {
-      e.preventDefault();
-      setIncOrDec(1);
-      setActiveFieldName(name);
-    } else if (e.key === "ArrowDown") {
-      e.preventDefault();
-      setIncOrDec(-1);
-      setActiveFieldName(name);
-    } else if (/\D/.test(e.key)) {
-      e.preventDefault();
-    }
-  }
-
-  function handleInputKeyUp(e: React.KeyboardEvent<HTMLInputElement>) {
-    if (e.key === "ArrowUp" || e.key === "ArrowDown") {
-      setActiveFieldName(null);
-    }
-  }
-
-  function handleInputBlur() {
-    setActiveFieldName(null);
   }
 
   return {
@@ -163,15 +116,10 @@ export default function useTimer(startSeconds = 600) {
     reset,
     inputHandlers: {
       handleInputChange,
-      handleInputFocus,
-      handleInputKeyDown,
-      handleInputClick,
-      handleInputKeyUp,
-      handleInputBlur,
     },
     inputButtonHandlers: {
-      handleInputButtonDown,
-      handleInputButtonUp,
+      handleInputButtonTouchDown,
+      handleInputButtonTouchUp,
     },
   };
 }

@@ -18,13 +18,8 @@ const TimerDigits: FC<TimerDigitsType> = ({
 }) => {
   const {
     handleInputChange,
-    handleInputFocus,
-    handleInputKeyDown,
-    handleInputClick,
-    handleInputKeyUp,
-    handleInputBlur
   } = inputHandlers;
-  const { handleInputButtonDown, handleInputButtonUp } =
+  const { handleInputButtonTouchDown, handleInputButtonTouchUp } =
     inputButtonHandlers;
   return (
     <div className="digits__wrapper">
@@ -32,36 +27,25 @@ const TimerDigits: FC<TimerDigitsType> = ({
         className={classNames("digits__btn", "up", {
           disabled: isRunning,
         })}
-        onTouchStart={() => handleInputButtonDown(1, timeType)}
-        onTouchEnd={handleInputButtonUp}
-        onTouchCancel={handleInputButtonUp}
-        onMouseDown={() => handleInputButtonDown(1, timeType)}
-        onMouseUp={handleInputButtonUp}
-        onMouseLeave={handleInputButtonUp}
+        onTouchStart={() => handleInputButtonTouchDown(1, timeType)}
+        onTouchEnd={handleInputButtonTouchUp}
+        onTouchCancel={handleInputButtonTouchUp}
       />
       <input
         className="digits"
-        type="text"
+        type="number"
         name={timeType}
         value={digits}
         onChange={(e) => handleInputChange(e, digits, timeType)}
         disabled={isRunning || activeInputButton}
-        onFocus={handleInputFocus}
-        onClick={handleInputClick}
-        onKeyDown={(e) => handleInputKeyDown(e, timeType)}
-        onKeyUp={handleInputKeyUp}
-        onBlur={handleInputBlur}
       />
       <button
         className={classNames("digits__btn", "down", {
           disabled: isRunning,
         })}
-        onTouchStart={() => handleInputButtonDown(-1, timeType)}
-        onTouchEnd={handleInputButtonUp}
-        onTouchCancel={handleInputButtonUp}
-        onMouseDown={() => handleInputButtonDown(-1, timeType)}
-        onMouseUp={handleInputButtonUp}
-        onMouseLeave={handleInputButtonUp}
+        onTouchStart={() => handleInputButtonTouchDown(-1, timeType)}
+        onTouchEnd={handleInputButtonTouchUp}
+        onTouchCancel={handleInputButtonTouchUp}
       />
     </div>
   );
