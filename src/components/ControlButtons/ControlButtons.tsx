@@ -1,10 +1,10 @@
 import { FC } from "react";
 import { UseTimerType } from "../../customHooks/useTimer";
-import './ControlButtons.css'
+import "./ControlButtons.css";
 
 type ControlButtonsType = Pick<
   UseTimerType,
-  "isRunning" | 'time' | "start" | "reset" 
+  "isRunning" | "time" | "start" | "reset"
 >;
 
 const ControlButtons: FC<ControlButtonsType> = ({
