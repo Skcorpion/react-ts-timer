@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import Time from "../utils/Time";
+import sound from '../assets/bell-ding.wav'
 
 export type UseTimerType = ReturnType<typeof useTimer>;
 
@@ -82,7 +83,7 @@ export default function useTimer(startSeconds = 600) {
 
   // Play the sound effect when the timer ends
   const playSoundEffect = () => {
-    const audio = new Audio('/bell-ding.wav');
+    const audio = new Audio(sound);
     audio.play();
   };
 
