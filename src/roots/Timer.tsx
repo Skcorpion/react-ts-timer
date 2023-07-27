@@ -51,7 +51,7 @@ export default function Timer() {
           />
         }
       />
-      <ControlButtons {...{ isRunning, start, reset }} />
+      <ControlButtons {...{ isRunning, time, start, reset }} />
     </div>
   );
 }

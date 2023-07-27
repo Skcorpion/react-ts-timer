@@ -4,7 +4,7 @@ import Time from "../utils/Time";
 export type UseTimerType = ReturnType<typeof useTimer>;
 
 export default function useTimer(startSeconds = 600) {
-  const [time, setTime] = useState(startSeconds);
+  const [fullTimeInSeconds, setFullTimeInSeconds] = useState(startSeconds);
   const [isRunning, setIsRunning] = useState(false);
   const [activeFieldName, setActiveFieldName] = useState<null | string>(null);
   const [activeInputButton, setActiveInputButton] = useState(false);
@@ -14,9 +14,10 @@ export default function useTimer(startSeconds = 600) {
     let timerInterval = 0;
     if (isRunning) {
       timerInterval = setInterval(() => {
-        if (isRunning && time > 0) {
-          setTime((prev) => prev - 1);
-        } else if (time === 0) {
+        if (isRunning && fullTimeInSeconds > 0) {
+          setFullTimeInSeconds((prev) => prev - 1);
+        } else if (fullTimeInSeconds === 0) {
+          playSoundEffect();
           setIsRunning(false);
         }
       }, 1000);
@@ -25,7 +26,7 @@ export default function useTimer(startSeconds = 600) {
     return () => {
       clearInterval(timerInterval);
     };
-  }, [isRunning, time]);
+  }, [isRunning, fullTimeInSeconds]);
 
   useEffect(() => {
     let timeInterval = 0;
@@ -47,13 +48,13 @@ export default function useTimer(startSeconds = 600) {
 
   function reset() {
     setIsRunning(false);
-    setTime(startSeconds);
+    setFullTimeInSeconds(startSeconds);
   }
 
   function changeTime(name: string, incOrDec: 1 | -1) {
     switch (name) {
       case "hours":
-        setTime((prev) => {
+        setFullTimeInSeconds((prev) => {
           const nextValue = prev + 3600 * incOrDec;
           if (nextValue >= 0) {
             return nextValue;
@@ -61,7 +62,7 @@ export default function useTimer(startSeconds = 600) {
         });
         break;
       case "minutes":
-        setTime((prev) => {
+        setFullTimeInSeconds((prev) => {
           const nextValue = prev + 60 * incOrDec;
           if (nextValue >= 0) {
             return nextValue;
@@ -69,7 +70,7 @@ export default function useTimer(startSeconds = 600) {
         });
         break;
       case "seconds":
-        setTime((prev) => {
+        setFullTimeInSeconds((prev) => {
           const nextValue = prev + incOrDec;
           if (nextValue >= 0) {
             return nextValue;
@@ -78,6 +79,12 @@ export default function useTimer(startSeconds = 600) {
         break;
     }
   }
+
+  // Play the sound effect when the timer ends
+  const playSoundEffect = () => {
+    const audio = new Audio('/audio/bell-ding.wav');
+    audio.play();
+  };
 
 
   function handleInputChange(
@@ -109,7 +116,7 @@ export default function useTimer(startSeconds = 600) {
   }
 
   return {
-    time: Time.getTimeFromSeconds(time),
+    time: {...Time.getTimeFromSeconds(fullTimeInSeconds), fullTimeInSeconds},
     isRunning,
     activeInputButton,
     start,

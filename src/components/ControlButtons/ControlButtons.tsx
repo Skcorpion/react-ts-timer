@@ -4,11 +4,12 @@ import './ControlButtons.css'
 
 type ControlButtonsType = Pick<
   UseTimerType,
-  "isRunning" | "start" | "reset"
+  "isRunning" | 'time' | "start" | "reset" 
 >;
 
 const ControlButtons: FC<ControlButtonsType> = ({
   isRunning,
+  time,
   start,
   reset,
 }) => (
@@ -16,6 +17,7 @@ const ControlButtons: FC<ControlButtonsType> = ({
     <button
       className={`control-btn start ${isRunning ? "running" : ""}`}
       onClick={start}
+      disabled={time.fullTimeInSeconds === 0}
     >
       {isRunning ? "Pause" : "Play"}
     </button>
