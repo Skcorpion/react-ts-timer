@@ -82,7 +82,7 @@ export default function useTimer(startSeconds = 600) {
 
   // Play the sound effect when the timer ends
   const playSoundEffect = () => {
-    const audio = new Audio('/audio/bell-ding.wav');
+    const audio = new Audio('/bell-ding.wav');
     audio.play();
   };
 
