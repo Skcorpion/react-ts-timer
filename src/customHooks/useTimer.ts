@@ -19,7 +19,10 @@ export default function useTimer(startSeconds = 600) {
       timerInterval = window.setInterval(() => {
         if (isRunning && fullTimeInSeconds > 0) {
           setFullTimeInSeconds((prev) => prev - 1);
-        } else if (fullTimeInSeconds === 0) {
+        } else {
+          setIsRunning(false);
+        }
+        if (fullTimeInSeconds === 1) {
           playSoundEffect();
           setIsRunning(false);
         }
