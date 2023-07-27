@@ -8,7 +8,7 @@ type ContextType = {
 };
 
 function Root() {
-  const timer = { ...useTimer(11) };
+  const timer = { ...useTimer(1) };
   const stopWatch = { ...useStopwatch() };
 
   return (

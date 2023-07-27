@@ -10,7 +10,7 @@ export default function useStopwatch() {
   useEffect(() => {
     let timerInterval = 0;
     if (isRunning) {
-      timerInterval = setInterval(() => {
+      timerInterval = window.setInterval(() => {
         if (isRunning) {
           setFullTimeInSeconds((prev) => prev + 1);
         }

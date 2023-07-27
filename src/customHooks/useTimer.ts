@@ -13,7 +13,7 @@ export default function useTimer(startSeconds = 600) {
   useEffect(() => {
     let timerInterval = 0;
     if (isRunning) {
-      timerInterval = setInterval(() => {
+      timerInterval = window.setInterval(() => {
         if (isRunning && fullTimeInSeconds > 0) {
           setFullTimeInSeconds((prev) => prev - 1);
         } else if (fullTimeInSeconds === 0) {
@@ -32,7 +32,7 @@ export default function useTimer(startSeconds = 600) {
     let timeInterval = 0;
     if (activeFieldName !== null) {
       changeTime(activeFieldName, incOrDec);
-      timeInterval = setInterval(() => {
+      timeInterval = window.setInterval(() => {
         changeTime(activeFieldName, incOrDec);
       }, 100);
     }
