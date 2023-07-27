@@ -10,7 +10,6 @@ export default function useTimer(startSeconds = 600) {
   const [activeInputButton, setActiveInputButton] = useState(false);
   const [incOrDec, setIncOrDec] = useState<1 | -1>(1);
 
-  
   useEffect(() => {
     let timerInterval = 0;
     if (isRunning) {
