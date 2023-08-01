@@ -14,10 +14,9 @@ export default function useTimer(startSeconds = 600) {
   const [incOrDec, setIncOrDec] = useState<1 | -1>(1);
 
   useEffect(() => {
-    let timerInterval = 0;
     if (isRunning) {
-      timerInterval = window.setInterval(() => {
-        if (isRunning && fullTimeInSeconds > 0) {
+      window.setTimeout(() => {
+        if (fullTimeInSeconds > 0) {
           setFullTimeInSeconds((prev) => prev - 1);
         } else {
           setIsRunning(false);
@@ -29,17 +28,13 @@ export default function useTimer(startSeconds = 600) {
       }, 1000);
       setIsChanged(false);
     }
-
-    return () => {
-      clearInterval(timerInterval);
-    };
   }, [isRunning, fullTimeInSeconds]);
 
   useEffect(() => {
     if (isChanged) setResetTime(fullTimeInSeconds);
   }, [isChanged, fullTimeInSeconds]);
 
-  useEffect(() => {    
+  useEffect(() => {
     let timeInterval = 0;
     if (activeFieldName !== null) {
       changeTime(activeFieldName, incOrDec);
@@ -62,7 +57,7 @@ export default function useTimer(startSeconds = 600) {
     setFullTimeInSeconds(resetTime);
   }
 
-  function changeTime(name: string, incOrDec: 1 | -1) { 
+  function changeTime(name: string, incOrDec: 1 | -1) {
     switch (name) {
       case "hours":
         setFullTimeInSeconds((prev) => {
@@ -89,7 +84,7 @@ export default function useTimer(startSeconds = 600) {
         });
         break;
     }
-  setIsChanged(true);
+    setIsChanged(true);
   }
 
   // Play the sound effect when the timer ends
