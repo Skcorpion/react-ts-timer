@@ -9,7 +9,7 @@ In this challenge, we created a timer and a stopwatch that work independently of
 
 ### Additionally, we introduced specialized functionalities for the timer:
 - [x] Allowing users to specify custom countdown times.
--   [x] Mobile-friendly keys for timer adjustments.
+- [x] Mobile-friendly keys for timer adjustments.
 - [x] Audio sound signal to notify users when the countdown reaches its end.
 
 ## Used resources
