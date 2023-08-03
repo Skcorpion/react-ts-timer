@@ -17,3 +17,4 @@ In this challenge, we created a timer and a stopwatch that work independently of
 - [Deploy Vite app to GitHub Pages using GitHub Actions](https://github.com/sitek94/vite-deploy-demo)
 - [React Router](https://reactrouter.com/en/main)
 - [useReducer hook](https://react.dev/reference/react/useReducer)
+- [web-worker](https://codesandbox.io/s/timer-using-web-worker-w2or0?file=/src/App.js)
