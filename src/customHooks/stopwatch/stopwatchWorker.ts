@@ -1,8 +1,16 @@
 const workercode = () => {
-  self.onmessage = function (): void {
-    setInterval(() => {      
-      self.postMessage({ action: "TICK" });
-    }, 1000);
+  let intervalId = 0;
+  self.onmessage = function (event: MessageEvent): void {
+    const { isRunning } = event.data as {
+      isRunning: boolean;
+    };
+    if (isRunning) {
+      intervalId = setInterval(() => {
+        self.postMessage({ action: "TICK" });
+      }, 1000);
+    } else {
+      clearInterval(intervalId);
+    }
   };
 };
 

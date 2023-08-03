@@ -32,12 +32,10 @@ export default function useStopwatch() {
     return () => {
       workerRef.current?.terminate();
     };
-  }, [isRunning]);
+  }, []);
 
   useEffect(() => {
-    if (isRunning) {
-      workerRef.current?.postMessage({});
-    }
+      workerRef.current?.postMessage({isRunning});
   }, [isRunning]);
 
   function start() {
