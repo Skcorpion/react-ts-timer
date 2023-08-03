@@ -1,6 +1,6 @@
 import { NavLink, Outlet, useOutletContext } from "react-router-dom";
 import useTimer, { UseTimerType } from "../customHooks/timer/useTimer";
-import useStopwatch, { UseStopwatchType } from "../customHooks/useStopwatch";
+import useStopwatch, { UseStopwatchType } from "../customHooks/stopwatch/useStopwatch";
 
 type ContextType = {
   timer: UseTimerType;

@@ -1,7 +1,8 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useImmerReducer } from "use-immer";
-import Time from "../utils/Time";
+import Time from "../../utils/Time";
 import { initialStopwatchState, stopwatchReducer } from "./stopwatchReducer";
+import stopwatchWorker from "./stopwatchWorker";
 
 export type UseStopwatchType = ReturnType<typeof useStopwatch>;
 
@@ -11,20 +12,32 @@ export default function useStopwatch() {
     initialStopwatchState
   );
   const { fullTimeInSeconds, isRunning } = state;
+  const workerRef = useRef<Worker | null>(null);
 
   useEffect(() => {
-    let timerInterval = 0;
-    if (isRunning) {
-      timerInterval = window.setInterval(() => {
-        if (isRunning) {
+    workerRef.current = new Worker(stopwatchWorker);
+
+    workerRef.current.onmessage = (event) => {
+      const { action } = event.data;
+
+      switch (action) {
+        case "TICK":
           dispatch({ type: "increase" });
-        }
-      }, 1000);
-    }
+          break;
+        default:
+          break;
+      }
+    };
 
     return () => {
-      clearInterval(timerInterval);
+      workerRef.current?.terminate();
     };
+  }, [isRunning]);
+
+  useEffect(() => {
+    if (isRunning) {
+      workerRef.current?.postMessage({});
+    }
   }, [isRunning]);
 
   function start() {
