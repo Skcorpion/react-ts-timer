@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { UseTimerType } from "../../customHooks/useTimer";
+import { UseTimerType } from "../../customHooks/timer/useTimer";
 import "./ControlButtons.css";
 
 type ControlButtonsType = Pick<

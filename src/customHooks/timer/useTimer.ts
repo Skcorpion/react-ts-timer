@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
-import Time from "../utils/Time";
-import sound from "../assets/bell-ding.wav";
+import { useEffect, useRef, useState } from "react";
+import Time from "../../utils/Time";
+import sound from "../../assets/bell-ding.wav";
+import timerWorker from "./timerWorker";
 
 export type UseTimerType = ReturnType<typeof useTimer>;
 
@@ -12,23 +13,45 @@ export default function useTimer(startSeconds = 600) {
   const [activeFieldName, setActiveFieldName] = useState<null | string>(null);
   const [activeInputButton, setActiveInputButton] = useState(false);
   const [incOrDec, setIncOrDec] = useState<1 | -1>(1);
+  const workerRef = useRef<Worker | null>(null);
+
+  useEffect(() => {
+    // Initialize the web worker
+    workerRef.current = new Worker(timerWorker);
+
+    // Event listener to handle messages from the worker
+    workerRef.current.onmessage = (event) => {
+      const { action } = event.data;
+
+      switch (action) {
+        case "TICK":
+          setFullTimeInSeconds((prev) => prev - 1);
+          break;
+        case "TIMER_ENDED":
+          setIsRunning(false);
+          break;
+        default:
+          break;
+      }
+    };
+
+    // Clean up the worker when the component unmounts
+    return () => {
+      workerRef.current?.terminate();
+    };
+  }, [isRunning]);
 
   useEffect(() => {
     if (isRunning) {
-      window.setTimeout(() => {
-        if (fullTimeInSeconds > 0) {
-          setFullTimeInSeconds((prev) => prev - 1);
-        } else {
-          setIsRunning(false);
-        }
-        if (fullTimeInSeconds === 1) {
-          playSoundEffect();
-          setIsRunning(false);
-        }
-      }, 1000);
+      // Send data to the worker whenever isRunning or fullTimeInSeconds changes
+      workerRef.current?.postMessage({ fullTimeInSeconds });
       setIsChanged(false);
     }
   }, [isRunning, fullTimeInSeconds]);
+
+  useEffect(() => {
+    if (fullTimeInSeconds === 0 && !isChanged) playSoundEffect();
+  }, [fullTimeInSeconds, isChanged]);
 
   useEffect(() => {
     if (isChanged) setResetTime(fullTimeInSeconds);

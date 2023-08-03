@@ -1,6 +1,6 @@
 import "./Digits.css";
 import { FC } from "react";
-import { UseTimerType } from "../../customHooks/useTimer";
+import { UseTimerType } from "../../customHooks/timer/useTimer";
 import classNames from "classnames";
 
 type TimerDigitsType = Omit<UseTimerType, "start" | "reset" | "time"> & {
